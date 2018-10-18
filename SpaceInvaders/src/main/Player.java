@@ -8,11 +8,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.net.URL;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
 public class Player {
 	ResourceLoader loader;
+	private HashMap<String, Boolean>PowerUp;
 	int x;
 	int y;
 	int r;
@@ -95,6 +97,9 @@ public class Player {
 		};
 	public Player(){
 		loader = new ResourceLoader();
+		PowerUp = new HashMap<String,Boolean>();
+		PowerUp.put("Rocket", false);
+		PowerUp.put("Meteor", false);
 		x = GamePanel.WIDTH/2;
 		y = GamePanel.HEIGHT-100;
 		r = 15;
@@ -147,6 +152,11 @@ public class Player {
 	public boolean getMeteorFiring(){return meteorFiring;}
 	
 	public boolean getLeft(){return left;}
+	
+	public HashMap<String, Boolean> getPowerUp(){return PowerUp;}
+	public void setPowerUp(HashMap<String, Boolean> powerUp){this.PowerUp = powerUp;}
+	
+	
 	
 	public void addScore(int i){
 		score += i;
@@ -220,6 +230,9 @@ public class Player {
 		bY++;
 		bY2++;
 		continuousYposition ++; 
+	}
+	public void addPowerUp(){
+		
 	}
 	
 	public void drawLifeBar(Graphics g){

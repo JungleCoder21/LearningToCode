@@ -16,6 +16,8 @@ import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.sound.sampled.Clip;
 import javax.swing.JButton;
@@ -197,7 +199,7 @@ public class GamePanel extends JPanel implements Runnable,MouseListener{
 	public GamePanel(){
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));  // works with pack; difference vs setSize?
 		player = new Player();
-		key= new KeyInputs(player);
+		key= new KeyInputs(player,this);
 		addKeyListener(key);
 		addMouseListener(this);
 		setFocusable(true);
@@ -504,9 +506,9 @@ public class GamePanel extends JPanel implements Runnable,MouseListener{
 		for(int i=0;i<enemyArray.size();i++){
 			if(enemyArray.get(i).playerCollision(player)){
 				if(enemyArray.get(i).getPrize() == true){
-					powerUpsMap.put("rocket", 1);
+					player.getPowerUp().put("Rocket", true);
 				}else if(enemyArray.get(i).getPrize2() == true){
-					powerUpsMap.put("meteor", 2);
+					player.getPowerUp().put("Meteor", true);
 				}
 				else {
 					player.setLifeBar(player.getLifeBar()-3);

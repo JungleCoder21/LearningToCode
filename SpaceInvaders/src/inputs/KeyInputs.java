@@ -5,16 +5,19 @@ import main.Player;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Map;
 
 import javax.sound.sampled.Clip;
 
 public class KeyInputs implements KeyListener {
 	
 	private Player player;
-	private int powerUpCounter = 0;
+	private GamePanel gp;
+	private int powerUpCounter = 1;
 	
-	public KeyInputs(Player player){
+	public KeyInputs(Player player,GamePanel gp){
 		this.player = player;
+		this.gp = gp;
 	}
 
 	@Override
@@ -37,14 +40,31 @@ public class KeyInputs implements KeyListener {
 			player.setFiring(true);
 		}
 		if(key == KeyEvent.VK_P){
-	//		pauseGame();
+			gp.pauseGame();
 		}
 		
 		if(key == KeyEvent.VK_R){
-		//	restart();
+			gp.restart();
 		}
 		if(key == KeyEvent.VK_CONTROL){
-			if(powerUpCounter <2 ){
+			for(String s : player.getPowerUp().keySet()){
+				if(player.getPowerUp().get(s) == true){
+					if(s == "Rocket" && powerUpCounter == 1){
+						powerUpCounter++;
+						player.setMeteorFiring(false);
+						player.setRocketFiring(true);
+						break;
+					}else if(s == "Meteor" && powerUpCounter == 2){
+						powerUpCounter --;
+						player.setRocketFiring(false);
+						player.setMeteorFiring(true);
+						break;
+					}
+				}
+			}
+			
+			
+	/*	if(powerUpCounter <2 ){
 				powerUpCounter ++;
 			}
 			for(String s: GamePanel.powerUpsMap.keySet()){
@@ -59,7 +79,7 @@ public class KeyInputs implements KeyListener {
 			
 			if(powerUpCounter == 2){
 				powerUpCounter = 0;
-			}
+			} */
 		}
 	}
 
